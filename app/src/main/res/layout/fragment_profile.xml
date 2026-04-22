@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/completa_perfil"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/subtitulo_perfil"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            android:layout_marginBottom="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginEnd="12dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/nombre_label" android:textStyle="bold" android:layout_marginBottom="4dp" />
+                <EditText
+                    android:id="@+id/etProfNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="#F5F5F5"
+                    android:paddingHorizontal="12dp"
+                    android:hint="Juan Pérez"
+                    android:inputType="textPersonName" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/edad_label" android:textStyle="bold" android:layout_marginBottom="4dp" />
+                <EditText
+                    android:id="@+id/etProfEdad"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="#F5F5F5"
+                    android:paddingHorizontal="12dp"
+                    android:hint="25"
+                    android:inputType="number" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/genero_label" android:textStyle="bold" android:layout_marginTop="16dp" android:layout_marginBottom="4dp" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundColor="#F5F5F5"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
+            <AutoCompleteTextView
+                android:id="@+id/spinnerGenero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="@string/selecciona_genero"
+                android:padding="12dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/altura_label" android:textStyle="bold" android:layout_marginTop="16dp" android:layout_marginBottom="4dp" />
+        <EditText
+            android:id="@+id/etProfAltura"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="#F5F5F5"
+            android:paddingHorizontal="12dp"
+            android:hint="170"
+            android:inputType="number" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/peso_label" android:textStyle="bold" android:layout_marginTop="16dp" android:layout_marginBottom="4dp" />
+        <EditText
+            android:id="@+id/etProfPeso"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="#F5F5F5"
+            android:paddingHorizontal="12dp"
+            android:hint="70"
+            android:inputType="numberDecimal" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Enfermedad Preexistente" android:textStyle="bold" android:layout_marginTop="16dp" android:layout_marginBottom="4dp" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundColor="#F5F5F5"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
+            <AutoCompleteTextView
+                android:id="@+id/spinnerEnfermedad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="Ninguna"
+                android:padding="12dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/objetivo_label" android:textStyle="bold" android:layout_marginTop="16dp" android:layout_marginBottom="4dp" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundColor="#F5F5F5"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
+            <AutoCompleteTextView
+                android:id="@+id/spinnerObjetivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="@string/selecciona_objetivo"
+                android:padding="12dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/actividad_label" android:textStyle="bold" android:layout_marginTop="16dp" android:layout_marginBottom="4dp" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundColor="#F5F5F5"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
+            <AutoCompleteTextView
+                android:id="@+id/spinnerActividad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="@string/selecciona_actividad"
+                android:padding="12dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnContinuarPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/continuar"
+            android:backgroundTint="#0A0A0E"
+            android:textColor="@color/white"
+            android:layout_marginTop="32dp"
+            app:cornerRadius="8dp" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

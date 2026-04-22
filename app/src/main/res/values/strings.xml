@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Dietec AI</string>
+    <string name="slogan">Control de peso con inteligencia artificial</string>
+    <string name="completa_perfil">Completa tu Perfil</string>
+    <string name="subtitulo_perfil">Necesitamos esta información para personalizar tus recomendaciones</string>
+
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="registrar">Registrarse</string>
+    <string name="email_label">Email</string>
+    <string name="email_hint">tu@email.com</string>
+    <string name="contrasena_label">Contraseña</string>
+    <string name="confirmar_contrasena_label">Confirmar Contraseña</string>
+    <string name="dots_hint">........</string>
+
+    <string name="nombre_label">Nombre</string>
+    <string name="edad_label">Edad</string>
+    <string name="genero_label">Género</string>
+    <string name="altura_label">Altura (cm)</string>
+    <string name="peso_label">Peso (kg)</string>
+    <string name="objetivo_label">Objetivo</string>
+    <string name="actividad_label">Nivel de Actividad</string>
+
+    <string name="selecciona_genero">Selecciona tu género</string>
+    <string name="selecciona_objetivo">Selecciona tu objetivo</string>
+    <string name="selecciona_actividad">Selecciona tu nivel de actividad</string>
+
+    <string name="continuar">Continuar</string>
+
+    <string name="advertencia_ia">Aviso: Esta información es generada por IA y es solo referencial. Para un diagnóstico preciso, consulte a un profesional en los centros de salud cercanos.</string>
+
+    <!-- Resources for fragment_home.xml -->
+    <string name="imc_default">IMC: --</string>
+    <string name="categoria_default">Categoría: --</string>
+    <string name="calcular_imc">Calcular IMC</string>
+    <string name="generar_dieta">Generar Dieta</string>
+    <string name="generar_rutina">Generar Rutina</string>
+    <string name="buscar_especialistas">Buscar Especialistas Cercanos</string>
+
+    <!-- Navigation labels -->
+    <string name="title_login">Login</string>
+    <string name="title_register">Registro</string>
+    <string name="title_profile">Perfil</string>
+    <string name="title_home">Inicio</string>
+</resources>
