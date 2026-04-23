@@ -1,6 +1,5 @@
 package com.example.controlpeso
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,16 +7,17 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.controlpeso.database.AppDatabase
-import com.example.controlpeso.database.UserEntity
 import com.example.controlpeso.databinding.FragmentProfileBinding
-import kotlinx.coroutines.launch
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+    private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -26,28 +26,23 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupDropdowns()
-
         binding.btnContinuarPerfil.setOnClickListener {
             if (validarPerfil()) {
-                saveProfileData()
+                guardarPerfilEnFirestore()
             }
         }
     }
 
     private fun setupDropdowns() {
         val generos = arrayOf("Masculino", "Femenino", "Otro")
-        val adapterGenero = ArrayAdapter(requireContext(), R.layout.list_item, generos)
-        binding.spinnerGenero.setAdapter(adapterGenero)
+        binding.spinnerGenero.setAdapter(ArrayAdapter(requireContext(), R.layout.list_item, generos))
 
         val enfermedades = arrayOf("Ninguna", "Diabetes", "Colesterol elevado", "Hipertension")
-        val adapterEnfermedad = ArrayAdapter(requireContext(), R.layout.list_item, enfermedades)
-        binding.spinnerEnfermedad.setAdapter(adapterEnfermedad)
+        binding.spinnerEnfermedad.setAdapter(ArrayAdapter(requireContext(), R.layout.list_item, enfermedades))
 
         val objetivos = arrayOf("Perder Peso", "Mantener Peso", "Ganar Peso")
-        val adapterObjetivo = ArrayAdapter(requireContext(), R.layout.list_item, objetivos)
-        binding.spinnerObjetivo.setAdapter(adapterObjetivo)
+        binding.spinnerObjetivo.setAdapter(ArrayAdapter(requireContext(), R.layout.list_item, objetivos))
 
         val actividades = arrayOf(
             "Sedentario (poco o ningún ejercicio)",
@@ -56,8 +51,7 @@ class ProfileFragment : Fragment() {
             "Activo (ejercicio 6-7 días/semana)",
             "Muy Activo (ejercicio intenso diario)"
         )
-        val adapterActividad = ArrayAdapter(requireContext(), R.layout.list_item, actividades)
-        binding.spinnerActividad.setAdapter(adapterActividad)
+        binding.spinnerActividad.setAdapter(ArrayAdapter(requireContext(), R.layout.list_item, actividades))
     }
 
     private fun validarPerfil(): Boolean {
@@ -71,65 +65,48 @@ class ProfileFragment : Fragment() {
         return true
     }
 
-    private fun saveProfileData() {
+    private fun guardarPerfilEnFirestore() {
+        val uid = auth.currentUser?.uid ?: return
+        val email = auth.currentUser?.email ?: ""
+        
         val nombre = binding.etProfNombre.text.toString()
-        val edad = binding.etProfEdad.text.toString().toIntOrNull() ?: 0
-        val altura = binding.etProfAltura.text.toString().toIntOrNull() ?: 0
         val peso = binding.etProfPeso.text.toString().toFloatOrNull() ?: 0f
-        val genero = binding.spinnerGenero.text.toString()
-        val enfermedad = binding.spinnerEnfermedad.text.toString()
-        val objetivo = binding.spinnerObjetivo.text.toString()
-        val actividad = binding.spinnerActividad.text.toString()
 
-        val prefs = requireActivity().getSharedPreferences("ControlPesoPrefs", Context.MODE_PRIVATE)
-        val email = prefs.getString("reg_email", "usuario@ejemplo.com") ?: "usuario@ejemplo.com"
-
-        // 1. Guardar en SharedPreferences (Persistencia Rápida)
-        val editor = prefs.edit()
-        editor.putString("nombres", nombre)
-        editor.putInt("edad", edad)
-        editor.putInt("talla", altura)
-        editor.putFloat("peso", peso)
-        editor.putFloat("peso_inicial", peso)
-        editor.putString("genero", genero)
-        editor.putString("enfermedad", enfermedad)
-        editor.putString("objetivo", objetivo)
-        editor.putString("actividad", actividad)
-        editor.putBoolean("isRegistered", true)
-        editor.putBoolean("isLoggedIn", true)
-        editor.apply()
-
-        // 2. Actualizar Sesión en memoria
-        UserSession.nombres = nombre
-        UserSession.edad = edad
-        UserSession.talla = altura
-        UserSession.pesoInicial = peso
-        UserSession.pesoActual = peso
-        UserSession.genero = genero
-        UserSession.enfermedadPreexistente = enfermedad
-        UserSession.objetivo = objetivo
-        UserSession.nivelActividad = actividad
-
-        // 3. Guardar en Room Database
-        val userEntity = UserEntity(
-            email = email,
-            nombres = nombre,
-            genero = genero,
-            edad = edad,
-            altura = altura,
-            pesoInicial = peso,
-            pesoActual = peso,
-            enfermedad = enfermedad,
-            objetivo = objetivo,
-            actividad = actividad
+        // Objeto de datos para Firebase
+        val userMap = hashMapOf(
+            "uid" to uid,
+            "email" to email,
+            "nombres" to nombre,
+            "edad" to (binding.etProfEdad.text.toString().toIntOrNull() ?: 0),
+            "genero" to binding.spinnerGenero.text.toString(),
+            "altura" to (binding.etProfAltura.text.toString().toIntOrNull() ?: 0),
+            "pesoInicial" to peso,
+            "pesoActual" to peso,
+            "enfermedad" to binding.spinnerEnfermedad.text.toString(),
+            "objetivo" to binding.spinnerObjetivo.text.toString(),
+            "actividad" to binding.spinnerActividad.text.toString()
         )
 
-        val db = AppDatabase.getDatabase(requireContext())
-        lifecycleScope.launch {
-            db.userDao().insertUser(userEntity)
-            Toast.makeText(context, "¡Perfil guardado correctamente!", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
-        }
+        binding.btnContinuarPerfil.isEnabled = false
+        binding.btnContinuarPerfil.text = "Sincronizando con la nube..."
+
+        // Aquí es donde sucede la magia: Se crea la colección "usuarios" y el documento con tu UID
+        db.collection("usuarios").document(uid)
+            .set(userMap)
+            .addOnSuccessListener {
+                // También actualizamos la sesión local para el Dashboard
+                UserSession.nombres = nombre
+                UserSession.pesoActual = peso
+                UserSession.talla = userMap["altura"] as Int
+                
+                Toast.makeText(context, "¡Perfil sincronizado en la nube!", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
+            }
+            .addOnFailureListener { e ->
+                binding.btnContinuarPerfil.isEnabled = true
+                binding.btnContinuarPerfil.text = "Continuar"
+                Toast.makeText(context, "Error al guardar: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+            }
     }
 
     override fun onDestroyView() {

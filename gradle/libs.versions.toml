@@ -1,17 +1,19 @@
 [versions]
 agp = "8.3.2"
-kotlin = "1.9.24"
-coreKtx = "1.12.0"
+kotlin = "2.0.21"
+coreKtx = "1.13.1"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-appcompat = "1.6.1"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
 material = "1.12.0"
-activity = "1.8.2"
-constraintlayout = "2.1.4"
-playServicesMaps = "18.2.0"
-playServicesLocation = "21.1.0"
-generativeAi = "0.7.0"
+activity = "1.9.3"
+constraintlayout = "2.2.0"
+playServicesMaps = "19.0.0"
+playServicesLocation = "21.3.0"
+generativeAi = "0.9.0"
+googleGmsGoogleServices = "4.4.2"
+firebaseBom = "33.5.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -25,7 +27,12 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeAi" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }

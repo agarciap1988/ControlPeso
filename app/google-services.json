@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "584205469776",
+    "project_id": "dietec-ai",
+    "storage_bucket": "dietec-ai.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584205469776:android:1c6069c0e679642b846955",
+        "android_client_info": {
+          "package_name": "com.example.controlpeso"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584205469776-262t5duu170rlasaukjtsgrhlr5b4v8p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANu5CLz0ZSdLhizCSCeFubsmnxkdhGmuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "584205469776-262t5duu170rlasaukjtsgrhlr5b4v8p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

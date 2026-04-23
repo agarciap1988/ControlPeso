@@ -21,7 +21,8 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val apiKey = "AIzaSyAflVqGq9EUZYbkczrbv229jM1UPgVkQEc"
+    // REEMPLAZA ESTO CON TU NUEVA API KEY DE GOOGLE AI STUDIO
+    private val apiKey = "AIzaSyA5NV-6UE-kXTh8hHJ3UHRpDWDyf20917Y"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -84,8 +85,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun consultarRecomendacionesIA() {
+        if (apiKey == "AIzaSyA5NV-6UE-kXTh8hHJ3UHRpDWDyf20917Y") return
+
         val generativeModel = GenerativeModel(
             modelName = "gemini-2.5-flash",
+            //modelName = "gemini-3-flash",
             apiKey = apiKey
         )
 
@@ -114,7 +118,6 @@ class HomeFragment : Fragment() {
                 val response = generativeModel.generateContent(prompt)
                 val text = response.text ?: ""
                 
-                // Parsear respuesta simple
                 val lineas = text.split("\n")
                 lineas.forEach { linea ->
                     when {
@@ -125,7 +128,7 @@ class HomeFragment : Fragment() {
                     }
                 }
             } catch (e: Exception) {
-                binding.tvIAEstadoSalud.text = "Error al cargar recomendaciones."
+                binding.tvIAEstadoSalud.text = "Configura tu nueva API Key para ver consejos."
             }
         }
     }

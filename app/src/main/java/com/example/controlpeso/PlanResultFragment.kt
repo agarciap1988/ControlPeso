@@ -26,7 +26,7 @@ class PlanResultFragment : Fragment() {
     private var _binding: FragmentPlanResultBinding? = null
     private val binding get() = _binding!!
 
-    private val apiKey = "AIzaSyAflVqGq9EUZYbkczrbv229jM1UPgVkQEc"
+    private val apiKey = "AIzaSyA5NV-6UE-kXTh8hHJ3UHRpDWDyf20917Y"
     private var tipoPlan: String = ""
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -65,6 +65,7 @@ class PlanResultFragment : Fragment() {
     private fun generarPlanConIA(tipo: String) {
         val generativeModel = GenerativeModel(
             modelName = "gemini-2.5-flash",
+            //modelName = "gemini-3-flash",
             apiKey = apiKey
         )
 

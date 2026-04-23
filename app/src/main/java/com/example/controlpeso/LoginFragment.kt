@@ -9,10 +9,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.controlpeso.databinding.FragmentLoginBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+
+    private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
@@ -22,11 +27,13 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Verificamos si hay una sesión activa para saltar el login
-        checkAutoLogin()
+        // Verificamos si ya hay un usuario de Firebase logueado
+        if (auth.currentUser != null) {
+            checkAndLoadData(auth.currentUser!!.uid)
+        }
 
         binding.btnIniciarSesion.setOnClickListener {
-            validarLogin()
+            validarLoginFirebase()
         }
 
         binding.btnToggleRegister.setOnClickListener {
@@ -34,44 +41,62 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun checkAutoLogin() {
-        val prefs = requireActivity().getSharedPreferences("ControlPesoPrefs", Context.MODE_PRIVATE)
-        val isLoggedIn = prefs.getBoolean("isLoggedIn", false)
-        if (isLoggedIn) {
-            loadUserSession(prefs)
-            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+    private fun validarLoginFirebase() {
+        val email = binding.etEmail.text.toString().trim()
+        val password = binding.etPassword.text.toString().trim()
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(context, "Ingresa correo y contraseña", Toast.LENGTH_SHORT).show()
+            return
         }
+
+        binding.btnIniciarSesion.isEnabled = false
+        binding.btnIniciarSesion.text = "Iniciando sesión..."
+
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val uid = task.result?.user?.uid ?: ""
+                    checkAndLoadData(uid)
+                } else {
+                    binding.btnIniciarSesion.isEnabled = true
+                    binding.btnIniciarSesion.text = "Iniciar Sesión"
+                    Toast.makeText(context, "Error: Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
-    private fun validarLogin() {
-        val emailIngresado = binding.etEmail.text.toString().trim()
-        val passwordIngresada = binding.etPassword.text.toString().trim()
+    private fun checkAndLoadData(uid: String) {
+        db.collection("usuarios").document(uid).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    // Mapeamos los datos de la nube a nuestra sesión local
+                    UserSession.email = document.getString("email") ?: ""
+                    UserSession.nombres = document.getString("nombres") ?: ""
+                    UserSession.genero = document.getString("genero") ?: ""
+                    UserSession.edad = (document.getLong("edad") ?: 0).toInt()
+                    UserSession.talla = (document.getLong("altura") ?: 0).toInt()
+                    UserSession.pesoInicial = (document.getDouble("pesoInicial") ?: 0.0).toFloat()
+                    UserSession.pesoActual = (document.getDouble("pesoActual") ?: 0.0).toFloat()
+                    UserSession.enfermedadPreexistente = document.getString("enfermedad") ?: "Ninguna"
+                    UserSession.objetivo = document.getString("objetivo") ?: ""
+                    UserSession.nivelActividad = document.getString("actividad") ?: ""
 
-        val prefs = requireActivity().getSharedPreferences("ControlPesoPrefs", Context.MODE_PRIVATE)
-        val emailRegistrado = prefs.getString("reg_email", "")
-        val passwordRegistrada = prefs.getString("reg_password", "")
+                    // Guardamos bandera de sesión activa localmente
+                    val prefs = requireActivity().getSharedPreferences("ControlPesoPrefs", Context.MODE_PRIVATE)
+                    prefs.edit().putBoolean("isLoggedIn", true).apply()
 
-        if (emailIngresado.isNotEmpty() && emailIngresado == emailRegistrado && passwordIngresada == passwordRegistrada) {
-            // Guardamos que la sesión está activa
-            prefs.edit().putBoolean("isLoggedIn", true).apply()
-
-            loadUserSession(prefs)
-            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-        } else {
-            Toast.makeText(context, "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun loadUserSession(prefs: android.content.SharedPreferences) {
-        UserSession.nombres = prefs.getString("nombres", "") ?: ""
-        UserSession.pesoActual = prefs.getFloat("peso", 0f)
-        UserSession.pesoInicial = prefs.getFloat("peso_inicial", UserSession.pesoActual)
-        UserSession.talla = prefs.getInt("talla", 0)
-        UserSession.edad = prefs.getInt("edad", 0)
-        UserSession.genero = prefs.getString("genero", "") ?: ""
-        UserSession.enfermedadPreexistente = prefs.getString("enfermedad", "Ninguna") ?: "Ninguna"
-        UserSession.objetivo = prefs.getString("objetivo", "") ?: ""
-        UserSession.nivelActividad = prefs.getString("actividad", "") ?: ""
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                } else {
+                    // Si no tiene perfil, lo mandamos a crearlo
+                    findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
+                }
+            }
+            .addOnFailureListener {
+                binding.btnIniciarSesion.isEnabled = true
+                binding.btnIniciarSesion.text = "Iniciar Sesión"
+                Toast.makeText(context, "Error al conectar con la nube", Toast.LENGTH_SHORT).show()
+            }
     }
 
     override fun onDestroyView() {
