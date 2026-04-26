@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F0F4F8">
+    android:background="@drawable/bg_gradient">
 
     <!-- Header -->
     <RelativeLayout
@@ -71,7 +71,6 @@
         <com.google.android.material.tabs.TabItem android:text="Profesionales" />
     </com.google.android.material.tabs.TabLayout>
 
-    <!-- Main Scrollable Area -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -82,117 +81,123 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- SECCION 1: RESUMEN -->
+            <!-- SECCIÓN IMC Y CALORÍAS -->
             <LinearLayout
-                android:id="@+id/layoutResumen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="visible">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="0dp"
-                        android:layout_marginEnd="8dp">
-                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Índice de Masa Corporal" android:textSize="11sp" android:textStyle="bold" />
-                            <TextView android:id="@+id/tvDashImc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="28sp" android:textStyle="bold" android:layout_marginTop="8dp" />
-                            <TextView android:id="@+id/tvDashImcLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Calculando..." android:textSize="10sp" android:background="@color/black" android:textColor="@color/white" android:paddingHorizontal="8dp" android:layout_marginTop="4dp" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="0dp">
-                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Calorías Diarias" android:textSize="11sp" android:textStyle="bold" />
-                            <TextView android:id="@+id/tvDashCalorias" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="28sp" android:textStyle="bold" android:layout_marginTop="8dp" />
-                            <TextView android:id="@+id/tvMantenimientoLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mantenimiento: -- kcal" android:textSize="10sp" android:textColor="#757575" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-                </LinearLayout>
-
-                <!-- Recomendaciones IA -->
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
                     app:cardCornerRadius="12dp"
-                    app:cardElevation="0dp">
+                    app:cardElevation="0dp"
+                    android:layout_marginEnd="8dp">
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Recomendaciones de la IA" android:textStyle="bold" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Basadas en tu perfil y objetivos" android:textSize="12sp" android:textColor="#757575" android:layout_marginBottom="16dp" />
-
-                        <!-- Salud -->
-                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#F0F7FF" android:padding="12dp" android:layout_marginBottom="8dp" android:gravity="center_vertical">
-                            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/btn_star_big_on" android:layout_marginEnd="8dp" app:tint="#3498DB"/>
-                            <TextView android:id="@+id/tvIAEstadoSalud" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Estado de Salud: Consultando IA..." android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <!-- Nutrición -->
-                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#F0FFF4" android:padding="12dp" android:layout_marginBottom="8dp" android:gravity="center_vertical">
-                            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_today" android:layout_marginEnd="8dp" app:tint="#2ECC71"/>
-                            <TextView android:id="@+id/tvIANutricion" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Nutrición: Preparando consejos..." android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <!-- Ejercicio -->
-                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#FDF0FF" android:padding="12dp" android:layout_marginBottom="8dp" android:gravity="center_vertical">
-                            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_media_play" android:layout_marginEnd="8dp" app:tint="#9B59B6"/>
-                            <TextView android:id="@+id/tvIAEjercicio" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Ejercicio: Analizando rutina..." android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <!-- Seguimiento -->
-                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#FFF9E6" android:padding="12dp" android:gravity="center_vertical">
-                            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_my_calendar" android:layout_marginEnd="8dp" app:tint="#F1C40F"/>
-                            <TextView android:id="@+id/tvIASeguimiento" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Plan de Seguimiento: Calculando..." android:textSize="12sp" />
-                        </LinearLayout>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Índice de Masa Corporal" android:textSize="11sp" android:textStyle="bold" />
+                        <TextView android:id="@+id/tvDashImc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="28sp" android:textStyle="bold" android:layout_marginTop="8dp" />
+                        <TextView android:id="@+id/tvDashImcLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Calculando..." android:textSize="10sp" android:background="@color/black" android:textColor="@color/white" android:paddingHorizontal="8dp" android:layout_marginTop="4dp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Perfil Detalle con Botón -->
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp">
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tu Perfil" android:textStyle="bold" android:layout_centerVertical="true" />
-                            <Button
-                                android:id="@+id/btnVerPerfil"
-                                style="@style/Widget.Material3.Button.TextButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:text="Ver mi perfil"
-                                android:textSize="12sp" />
-                        </RelativeLayout>
-
-                        <GridLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:columnCount="2">
-                            <TextView android:id="@+id/tvProfEdad" android:layout_width="0dp" android:layout_gravity="fill_horizontal" android:layout_columnWeight="1" android:text="Edad: --" android:textSize="12sp" />
-                            <TextView android:id="@+id/tvProfGenero" android:layout_width="0dp" android:layout_gravity="fill_horizontal" android:layout_columnWeight="1" android:text="Género: --" android:textSize="12sp" />
-                            <TextView android:id="@+id/tvProfAltura" android:layout_width="0dp" android:layout_gravity="fill_horizontal" android:layout_columnWeight="1" android:text="Altura: --" android:textSize="12sp" android:layout_marginTop="8dp" />
-                            <TextView android:id="@+id/tvProfPeso" android:layout_width="0dp" android:layout_gravity="fill_horizontal" android:layout_columnWeight="1" android:text="Peso: --" android:textSize="12sp" android:layout_marginTop="8dp" />
-                        </GridLayout>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Calorías Diarias" android:textSize="11sp" android:textStyle="bold" />
+                        <TextView android:id="@+id/tvDashCalorias" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="28sp" android:textStyle="bold" android:layout_marginTop="8dp" />
+                        <TextView android:id="@+id/tvMantenimientoLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mantenimiento: -- kcal" android:textSize="10sp" android:textColor="#757575" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
+            <!-- SECCIÓN: GRÁFICA DE PESO -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Evolución de Peso" android:textStyle="bold" android:textSize="14sp" android:layout_marginBottom="8dp" />
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/weightChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- RECOMENDACIONES DE LA IA -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Recomendaciones de la IA" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Basadas en tu perfil y objetivos" android:textSize="12sp" android:textColor="#757575" android:layout_marginBottom="16dp" />
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#F0F7FF" android:padding="12dp" android:layout_marginBottom="8dp" android:gravity="center_vertical">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/btn_star_big_on" android:layout_marginEnd="8dp" app:tint="#3498DB"/>
+                        <TextView android:id="@+id/tvIAEstadoSalud" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Estado de Salud: Consultando IA..." android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#F0FFF4" android:padding="12dp" android:layout_marginBottom="8dp" android:gravity="center_vertical">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_today" android:layout_marginEnd="8dp" app:tint="#2ECC71"/>
+                        <TextView android:id="@+id/tvIANutricion" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Nutrición: Preparando consejos..." android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#FDF0FF" android:padding="12dp" android:layout_marginBottom="8dp" android:gravity="center_vertical">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_media_play" android:layout_marginEnd="8dp" app:tint="#9B59B6"/>
+                        <TextView android:id="@+id/tvIAEjercicio" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Ejercicio: Analizando rutina..." android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="#FFF9E6" android:padding="12dp" android:gravity="center_vertical">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_my_calendar" android:layout_marginEnd="8dp" app:tint="#F1C40F"/>
+                        <TextView android:id="@+id/tvIASeguimiento" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Plan de Seguimiento: Calculando..." android:textSize="11sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- PERFIL DETALLE -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tu Perfil" android:textStyle="bold" android:layout_centerVertical="true" />
+                        <Button
+                            android:id="@+id/btnVerPerfil"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="Ver mi perfil"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <TextView android:id="@+id/tvProfNombreDisplay" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="14sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+
+                    <GridLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:columnCount="2">
+                        <TextView android:id="@+id/tvProfEdad" android:layout_width="0dp" android:layout_gravity="fill_horizontal" android:layout_columnWeight="1" android:text="Edad: --" android:textSize="12sp" />
+                        <TextView android:id="@+id/tvProfGenero" android:layout_width="0dp" android:layout_gravity="fill_horizontal" android:layout_columnWeight="1" android:text="Género: --" android:textSize="12sp" />
+                        <TextView android:id="@+id/tvProfAltura" android:layout_width="0dp" android:layout_gravity="fill_horizontal" android:layout_columnWeight="1" android:text="Altura: --" android:textSize="12sp" android:layout_marginTop="8dp" />
+                        <TextView android:id="@+id/tvProfPeso" android:layout_width="0dp" android:layout_gravity="fill_horizontal" android:layout_columnWeight="1" android:text="Peso: --" android:textSize="12sp" android:layout_marginTop="8dp" />
+                    </GridLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

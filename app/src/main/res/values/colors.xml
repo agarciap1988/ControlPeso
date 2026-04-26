@@ -12,4 +12,14 @@
     <color name="imc_sobrepeso">#F1C40F</color>
     <color name="imc_obesidad">#E67E22</color>
     <color name="imc_obesidad_critica">#E74C3C</color>
+
+    <color name="purple_500">#6200EE</color>
+    <color name="teal_200">#03DAC5</color>
+
+    <color name="bg_main">#FFFFFF</color>
+    <color name="bg_card">#FFFFFF</color>
+    <color name="bg_input">#F2F2F2</color>
+    <color name="text_primary">#000000</color>
+
+
 </resources>

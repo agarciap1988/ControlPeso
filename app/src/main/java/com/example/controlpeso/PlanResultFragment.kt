@@ -26,6 +26,7 @@ class PlanResultFragment : Fragment() {
     private var _binding: FragmentPlanResultBinding? = null
     private val binding get() = _binding!!
 
+    // RECUERDA PEGAR TU NUEVA API KEY AQUÍ
     private val apiKey = "AIzaSyA5NV-6UE-kXTh8hHJ3UHRpDWDyf20917Y"
     private var tipoPlan: String = ""
 
@@ -65,7 +66,6 @@ class PlanResultFragment : Fragment() {
     private fun generarPlanConIA(tipo: String) {
         val generativeModel = GenerativeModel(
             modelName = "gemini-2.5-flash",
-            //modelName = "gemini-3-flash",
             apiKey = apiKey
         )
 
@@ -73,7 +73,7 @@ class PlanResultFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
-                binding.tvPlanContent.text = "Generando tu $tipo con IA... Por favor espera."
+                binding.tvPlanContent.text = "Generando tu $tipo resumida... Por favor espera."
                 val response = generativeModel.generateContent(prompt)
                 
                 if (response.text != null) {
@@ -83,7 +83,7 @@ class PlanResultFragment : Fragment() {
                 }
                 
             } catch (e: Exception) {
-                binding.tvPlanContent.text = "Error: ${e.localizedMessage}"
+                binding.tvPlanContent.text = "Error: ${e.localizedMessage}\n(Verifica tu API Key o cuota)"
             }
         }
     }
@@ -150,32 +150,32 @@ class PlanResultFragment : Fragment() {
 
         val contextoEspecializado = if (tipo == "Dieta") {
             """
-            Genera un PLAN DE ALIMENTACIÓN detallado.
-            - Desayuno, Colación Mañana, Almuerzo, Colación Tarde y Cena.
-            - Incluye macros aproximados.
+            Genera un PLAN DE ALIMENTACIÓN DIARIO muy resumido (entre 150 a 200 palabras).
+            - Formato: Desayuno, Colación, Almuerzo, Colación y Cena.
+            - Usa frases cortas y guiones para que sea fácil de leer.
+            - Incluye macros (C, P, G) de forma simplificada.
             REGLAS NUTRICIONALES:
             - Condición Médica: $enfermedad.
-            - Si es Diabetes: Evita azúcares simples.
-            - Si es Hipertensión: Dieta baja en sodio.
-            - Si es Colesterol: Reduce grasas saturadas.
+            - Si es Diabetes: 0 azúcares procesados.
+            - Si es Hipertensión: Muy bajo en sodio.
             """.trimIndent()
         } else {
             """
-            Genera una RUTINA DE EJERCICIOS semanal.
-            - Divide por días.
-            - Adapta la intensidad al nivel ${UserSession.nivelActividad} y objetivo ${UserSession.objetivo}.
-            - REGLA DE SEGURIDAD: Dado que el usuario tiene $enfermedad, adapta los ejercicios para que sean seguros (especialmente si es hipertensión o problemas articulares).
+            Genera una RUTINA DE EJERCICIOS semanal ultra resumida (entre 150 a 200 palabras).
+            - Agrupa los días para ahorrar espacio (ej: Lunes/Miércoles/Viernes).
+            - Solo ejercicios clave con series y repeticiones.
+            - REGLA DE SEGURIDAD: Adaptado a $enfermedad y nivel ${UserSession.nivelActividad}.
             """.trimIndent()
         }
 
         return """
-            Actúa como un experto en salud.
-            Usuario: ${UserSession.nombres}, ${UserSession.genero}, ${UserSession.edad} años.
-            Peso Actual: ${UserSession.pesoActual}kg (Peso Inicial: ${UserSession.pesoInicial}kg).
-            Talla: ${UserSession.talla}cm.
+            Actúa como un experto en salud y bienestar. 
+            Usuario: ${UserSession.nombres}, ${UserSession.edad} años, ${UserSession.pesoActual}kg.
             Objetivo: ${UserSession.objetivo}.
             
             SOLICITUD: $contextoEspecializado
+            
+            IMPORTANTE: La respuesta debe ser muy concisa, fácil de leer rápido y de máximo 200 palabras.
         """.trimIndent()
     }
 

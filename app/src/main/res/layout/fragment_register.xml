@@ -4,99 +4,153 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:gravity="center_horizontal"
-    android:background="@color/white">
-
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/logo" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dietec AI"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginTop="8dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Control de peso con inteligencia artificial"
-        android:textSize="14sp"
-        android:textColor="#9E9E9E"
-        android:layout_marginBottom="32dp" />
-
-    <!-- Selector de pestañas -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#F0F0F0"
-        android:padding="4dp"
-        android:orientation="horizontal"
-        android:layout_marginBottom="24dp">
-        <Button
-            android:id="@+id/btnTabLogin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Iniciar Sesión"
-            android:backgroundTint="@android:color/transparent"
-            android:textColor="#9E9E9E"
-            style="@style/Widget.Material3.Button.TextButton" />
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Registrarse"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/black"
-            app:cornerRadius="20dp" />
-    </LinearLayout>
-
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Email" android:textStyle="bold" android:layout_marginBottom="8dp" />
-    <EditText
-        android:id="@+id/etRegEmail"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#F5F5F5"
-        android:hint="tu@email.com"
-        android:paddingHorizontal="16dp"
-        android:inputType="textEmailAddress"
-        android:layout_marginBottom="16dp" />
-
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Contraseña" android:textStyle="bold" android:layout_marginBottom="8dp" />
-    <EditText
-        android:id="@+id/etRegPassword"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#F5F5F5"
-        android:hint="........"
-        android:paddingHorizontal="16dp"
-        android:inputType="textPassword"
-        android:layout_marginBottom="16dp" />
-
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Confirmar Contraseña" android:textStyle="bold" android:layout_marginBottom="8dp" />
-    <EditText
-        android:id="@+id/etRegConfirmPassword"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#F5F5F5"
-        android:hint="........"
-        android:paddingHorizontal="16dp"
-        android:inputType="textPassword"
-        android:layout_marginBottom="32dp" />
+    android:gravity="center"
+    android:background="@drawable/bg_gradient">
 
     <Button
-        android:id="@+id/btnContinuarRegistro"
+        android:id="@+id/btnDarkMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🌙"
+        android:backgroundTint="#102c54"
+        android:layout_gravity="end"
+        android:layout_margin="1dp"/>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="Registrarse"
-        android:backgroundTint="#0A0A0E"
-        android:textColor="@color/white"
-        app:cornerRadius="8dp" />
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="@color/bg_card">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/app_name"
+                android:textColor="@color/text_primary"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="Control de peso con inteligencia artificial"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp" />
+
+            <!-- Selector de pestañas -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:background="#F0F0F0"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <Button
+                    android:id="@+id/btnTabLogin"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@android:color/transparent"
+                    android:text="Iniciar Sesión"
+                    android:textColor="#9E9E9E" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="Registrarse"
+                    android:textColor="@color/black"
+                    app:cornerRadius="20dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Email"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etRegEmail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/bg_input"
+                android:hint="tu@email.com"
+                android:inputType="textEmailAddress"
+                android:paddingHorizontal="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Contraseña"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etRegPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/bg_input"
+                android:hint="........"
+                android:inputType="textPassword"
+                android:paddingHorizontal="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Confirmar Contraseña"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etRegConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/bg_input"
+                android:hint="........"
+                android:inputType="textPassword"
+                android:paddingHorizontal="16dp" />
+
+            <Button
+                android:id="@+id/btnContinuarRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Registrarse"
+                android:background="@drawable/bg_button_ripple"
+                android:backgroundTint="@null"
+                app:backgroundTint="@null"
+                app:rippleColor="#33FFFFFF"
+                android:textColor="@android:color/black"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.05"
+                android:elevation="4dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
 </LinearLayout>

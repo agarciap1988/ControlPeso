@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.controlpeso.databinding.FragmentLoginBinding
@@ -26,6 +27,29 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val prefs = requireActivity().getSharedPreferences("settings", Context.MODE_PRIVATE)
+
+        //  Aplicar modo guardado al iniciar
+        val isDarkMode = prefs.getBoolean("dark_mode", false)
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
+        //  Botón modo oscuro (asegúrate que exista en tu XML)
+        binding.btnDarkMode.setOnClickListener {
+            val current = prefs.getBoolean("dark_mode", false)
+
+            if (current) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+
+            prefs.edit().putBoolean("dark_mode", !current).apply()
+        }
 
         // Verificamos si ya hay un usuario de Firebase logueado
         if (auth.currentUser != null) {
@@ -70,7 +94,6 @@ class LoginFragment : Fragment() {
         db.collection("usuarios").document(uid).get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
-                    // Mapeamos los datos de la nube a nuestra sesión local
                     UserSession.email = document.getString("email") ?: ""
                     UserSession.nombres = document.getString("nombres") ?: ""
                     UserSession.genero = document.getString("genero") ?: ""
@@ -82,13 +105,11 @@ class LoginFragment : Fragment() {
                     UserSession.objetivo = document.getString("objetivo") ?: ""
                     UserSession.nivelActividad = document.getString("actividad") ?: ""
 
-                    // Guardamos bandera de sesión activa localmente
                     val prefs = requireActivity().getSharedPreferences("ControlPesoPrefs", Context.MODE_PRIVATE)
                     prefs.edit().putBoolean("isLoggedIn", true).apply()
 
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 } else {
-                    // Si no tiene perfil, lo mandamos a crearlo
                     findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
                 }
             }

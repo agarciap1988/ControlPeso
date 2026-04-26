@@ -1,10 +1,12 @@
 package com.example.controlpeso
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.controlpeso.databinding.FragmentRegisterBinding
@@ -26,6 +28,29 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val prefs = requireActivity().getSharedPreferences("settings", Context.MODE_PRIVATE)
+
+        //  Modo guardado al iniciar
+        val isDarkMode = prefs.getBoolean("dark_mode", false)
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
+        //  Botón modo oscuro
+        binding.btnDarkMode.setOnClickListener {
+            val current = prefs.getBoolean("dark_mode", false)
+
+            if (current) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+
+            prefs.edit().putBoolean("dark_mode", !current).apply()
+        }
 
         binding.btnContinuarRegistro.setOnClickListener {
             if (validarCredenciales()) {

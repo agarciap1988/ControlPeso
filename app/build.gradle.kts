@@ -59,7 +59,7 @@ dependencies {
     // Google Generative AI (Gemini)
     implementation(libs.generativeai)
 
-    // Firebase (Using BOM for version management)
+    // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
@@ -71,7 +71,13 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
 
+    // Gráficas
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Material Theme
+    implementation("com.google.android.material:material:1.11.0")
 }
